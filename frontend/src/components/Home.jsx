@@ -5,16 +5,21 @@ import styles from "./Home.module.css";
 export const Home = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(false);
 
-  window.onscroll=()=>{
-    if(window.innerHeight + window.scrollY>=document.documentElement.offsetHeight){
+  window.onscroll = () => {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.documentElement.offsetHeight
+    ) {
+      if (!limit) {
         setPage(page + 1);
         setTimeout = () => {
           fetchData(page), 100;
-        }
+        };
+      }
     }
-  
-}
+  };
   useEffect(() => {
     fetchData(page);
   }, [page]);
@@ -23,9 +28,14 @@ export const Home = () => {
       .get(`https://dummyjson.com/products?limit=${9 + 5 * page}`)
       .then((res) => {
         setData(res.data.products);
+        if (res.data.products.length == res.data.total) {
+          setLimit(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
- 
 
   return (
     <div className={styles.container}>
