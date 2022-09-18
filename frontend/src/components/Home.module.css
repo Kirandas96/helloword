@@ -1,0 +1,19 @@
+.container{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 50px;
+    margin: 100px;
+}
+.product{
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+}
+img{
+    width: 100px;
+    height: 100px;
+}
