@@ -6,9 +6,17 @@ export const Home = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
 
+  window.onscroll=()=>{
+    if(window.innerHeight + window.scrollY>=document.documentElement.offsetHeight){
+        setPage(page + 1);
+        setTimeout = () => {
+          fetchData(page), 100;
+        }
+    }
+  
+}
   useEffect(() => {
     fetchData(page);
-    window.addEventListener("scroll", handleScroll);
   }, [page]);
   const fetchData = (page) => {
     axios
@@ -17,20 +25,10 @@ export const Home = () => {
         setData(res.data.products);
       });
   };
-  const handleScroll = () => {
-    // console.log("window.scrollY", window);
-    let userScrollHeight = window.innerHeight + window.scrollY;
-    let windowBottomHeight = document.documentElement.offsetHeight;
-    if (userScrollHeight >= windowBottomHeight) {
-      setPage(page + 1);
-      setTimeout = () => {
-        fetchData(page), 2000;
-      };
-    }
-  };
+ 
 
   return (
-    <div className={styles.container} onScroll={handleScroll}>
+    <div className={styles.container}>
       {data.map((el, index) => {
         return (
           <div key={index} className={styles.product}>
