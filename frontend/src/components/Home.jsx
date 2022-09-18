@@ -14,20 +14,22 @@ export const Home = () => {
     ) {
       if (!limit) {
         setPage(page + 1);
-        setTimeout = () => {
-          fetchData(page), 100;
-        };
       }
     }
   };
   useEffect(() => {
-    fetchData(page);
+    let timer1 = setTimeout(() => fetchData(page), 200);
+      return () => {
+        clearTimeout(timer1);
+      };
+    
   }, [page]);
   const fetchData = (page) => {
     axios
       .get(`https://dummyjson.com/products?limit=${9 + 5 * page}`)
       .then((res) => {
         setData(res.data.products);
+
         if (res.data.products.length == res.data.total) {
           setLimit(true);
         }
